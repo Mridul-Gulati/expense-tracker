@@ -22,7 +22,7 @@ if 'total_amount_to_be_reimbursed' not in st.session_state:
     st.session_state.total_amount_to_be_reimbursed = 0
 mode = st.selectbox("Select Mode", ["Incoming", "Outgoing"])
 category = [None, "Miscellaneous", "Travel", "Food", "Shopping", "Investment", "Salary","Gift"]
-selected_category = st.selectbox("Select your class", category)
+selected_category = st.selectbox("Select your category", category)
 reimbursed = st.checkbox("Will be Reimbursed?")
 amt = st.number_input("Enter the amount", min_value=0, step=1)
 description = st.text_input("Enter a description (optional)")
