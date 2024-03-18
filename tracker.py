@@ -10,7 +10,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pretty_html_table import build_table
 
-secrets = toml.load("secrets.toml")
 st.title("Expense Tracker")
 st.subheader("Made by Mridul Gulati")
 if 'remaining_balance' not in st.session_state:
@@ -34,19 +33,19 @@ if st.button("Add Transaction"):
     with st.spinner("Adding..."):
         try:
             client = gspread.service_account_from_dict({
-                "type": secrets["connections"]["gsheets"]["type"],
-                "project_id": secrets["connections"]["gsheets"]["project_id"],
-                "private_key_id": secrets["connections"]["gsheets"]["private_key_id"],
-                "private_key": secrets["connections"]["gsheets"]["private_key"],
-                "client_email": secrets["connections"]["gsheets"]["client_email"],
-                "client_id": secrets["connections"]["gsheets"]["client_id"],
-                "auth_uri": secrets["connections"]["gsheets"]["auth_uri"],
-                "token_uri": secrets["connections"]["gsheets"]["token_uri"],
-                "auth_provider_x509_cert_url": secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
-                "client_x509_cert_url": secrets["connections"]["gsheets"]["client_x509_cert_url"]
+                "type": st.secrets["connections"]["gsheets"]["type"],
+                "project_id": st.secrets["connections"]["gsheets"]["project_id"],
+                "private_key_id": st.secrets["connections"]["gsheets"]["private_key_id"],
+                "private_key": st.secrets["connections"]["gsheets"]["private_key"],
+                "client_email": st.secrets["connections"]["gsheets"]["client_email"],
+                "client_id": st.secrets["connections"]["gsheets"]["client_id"],
+                "auth_uri": st.secrets["connections"]["gsheets"]["auth_uri"],
+                "token_uri": st.secrets["connections"]["gsheets"]["token_uri"],
+                "auth_provider_x509_cert_url": st.secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
+                "client_x509_cert_url": st.secrets["connections"]["gsheets"]["client_x509_cert_url"]
             })
-            spreadsheet_key = secrets["connections"]["gsheets"]["spreadsheet"]
-            worksheet_index = int(secrets["connections"]["gsheets"]["worksheet"])
+            spreadsheet_key = st.secrets["connections"]["gsheets"]["spreadsheet"]
+            worksheet_index = int(st.secrets["connections"]["gsheets"]["worksheet"])
             sheet = client.open_by_key(spreadsheet_key).get_worksheet(worksheet_index)
         except Exception as e:
             st.error(f"An error occurred: {e}")
@@ -92,19 +91,19 @@ if summary_button or st.session_state.summary_but:
     with st.spinner("Loading..."):
         try:
             client = gspread.service_account_from_dict({
-                "type": secrets["connections"]["gsheets"]["type"],
-                "project_id": secrets["connections"]["gsheets"]["project_id"],
-                "private_key_id": secrets["connections"]["gsheets"]["private_key_id"],
-                "private_key": secrets["connections"]["gsheets"]["private_key"],
-                "client_email": secrets["connections"]["gsheets"]["client_email"],
-                "client_id": secrets["connections"]["gsheets"]["client_id"],
-                "auth_uri": secrets["connections"]["gsheets"]["auth_uri"],
-                "token_uri": secrets["connections"]["gsheets"]["token_uri"],
-                "auth_provider_x509_cert_url": secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
-                "client_x509_cert_url": secrets["connections"]["gsheets"]["client_x509_cert_url"]
+                "type": st.secrets["connections"]["gsheets"]["type"],
+                "project_id": st.secrets["connections"]["gsheets"]["project_id"],
+                "private_key_id": st.secrets["connections"]["gsheets"]["private_key_id"],
+                "private_key": st.secrets["connections"]["gsheets"]["private_key"],
+                "client_email": st.secrets["connections"]["gsheets"]["client_email"],
+                "client_id": st.secrets["connections"]["gsheets"]["client_id"],
+                "auth_uri": st.secrets["connections"]["gsheets"]["auth_uri"],
+                "token_uri": st.secrets["connections"]["gsheets"]["token_uri"],
+                "auth_provider_x509_cert_url": st.secrets["connections"]["gsheets"]["auth_provider_x509_cert_url"],
+                "client_x509_cert_url": st.secrets["connections"]["gsheets"]["client_x509_cert_url"]
             })
-            spreadsheet_key = secrets["connections"]["gsheets"]["spreadsheet"]
-            worksheet_index = int(secrets["connections"]["gsheets"]["worksheet"])
+            spreadsheet_key = st.secrets["connections"]["gsheets"]["spreadsheet"]
+            worksheet_index = int(st.secrets["connections"]["gsheets"]["worksheet"])
             sheet = client.open_by_key(spreadsheet_key).get_worksheet(worksheet_index)
         except Exception as e:
             st.error(f"An error occurred: {e}")
