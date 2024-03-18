@@ -54,7 +54,7 @@ if st.button("Add Transaction"):
         last_remaining_balance = sheet.cell(last_row, 6).value
         
         remaining_balance = float(last_remaining_balance) if last_remaining_balance != "Remaining Balance" else 5000        
-        if mode == "Outgoing" and category != "Investment":
+        if mode == "Outgoing" and selected_category != "Investment":
             remaining_balance += amt
         elif mode == "Incoming":
             remaining_balance += 0
