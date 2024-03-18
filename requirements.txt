@@ -1,0 +1,5 @@
+gspread==6.0.2
+pandas==1.5.3
+plotly==5.20.0
+pretty_html_table==0.9.16
+streamlit==1.32.2
