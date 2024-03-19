@@ -10,7 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pretty_html_table import build_table
 
-secrets = toml.load("secrets.toml")
+# secrets = toml.load("secrets.toml")
 st.title("Expense Tracker")
 st.subheader("Made by Mridul Gulati")
 
