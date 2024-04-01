@@ -114,8 +114,8 @@ if st.button("Settle Reimbursement"):
             st.error(f"An error occurred: {e}")
             st.stop()
         rows = sheet.get_all_values()
-        df = pd.DataFrame(rows[1:], columns=rows[0])
-        df_filtered = df[df["Will be Reimbursed?"] != "TRUE"]
+        df = pd.DataFrame(rows)
+        df_filtered = df[df[4] != "TRUE"]
         overwrite_worksheet_with_df(sheet, df_filtered)
         st.success("Reimbursement settled successfully!")
 if 'clicked' not in st.session_state:
