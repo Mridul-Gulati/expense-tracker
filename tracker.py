@@ -59,7 +59,7 @@ if st.button("Add Transaction"):
         last_remaining_balance = sheet.cell(last_row, 6).value
         
         remaining_balance = float(last_remaining_balance) if last_remaining_balance != "Remaining Balance" else 5000        
-        if mode == "Outgoing" and selected_category != "Investment":
+        if mode == "Outgoing" and selected_category != "Investment" and reimbursed == False:
             remaining_balance += amt
         elif mode == "Incoming":
             remaining_balance += 0
@@ -101,10 +101,9 @@ if st.button("Settle Reimbursement"):
             worksheet_index = int(st.secrets["connections"]["gsheets"]["worksheet"])
             sheet = client.open_by_key(spreadsheet_key).get_worksheet(worksheet_index)
             column_values = sheet.col_values(5)
-            # Start from the second row (skipping header)
             for i in range(2, len(column_values) + 1):
-                # Set each cell value to "FALSE"
-                sheet.update_cell(i, 5, "FALSE")
+                if sheet.cell(i, 5).value == "TRUE":
+                    sheet.delete_row(i)
             st.success("Reimbursement settled successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
