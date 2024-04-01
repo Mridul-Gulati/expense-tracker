@@ -82,6 +82,16 @@ if st.button("Add Transaction"):
         st.success("Transaction added successfully!")
         st.session_state["remaining_balance"] = remaining_balance
 
+def overwrite_worksheet_with_df(worksheet, df):
+    try:
+        worksheet.clear()
+
+        values = df.values.tolist()
+
+        worksheet.update("A1", values)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
 if st.button("Settle Reimbursement"):
     with st.spinner("Settling..."):
         try:
@@ -104,14 +114,9 @@ if st.button("Settle Reimbursement"):
             st.error(f"An error occurred: {e}")
             st.stop()
         rows = sheet.get_all_values()
-            
-        filtered_rows = [row for row in rows if row[4] != "TRUE"]
-        sheet.clear()
-        
-        for i, row in enumerate(filtered_rows, start=1):
-            for j, value in enumerate(row, start=1):
-                sheet.update_cell(i, j, value)
-        
+        df = pd.DataFrame(rows[1:], columns=rows[0])
+        df_filtered = df[df["Will be Reimbursed?"] != "TRUE"]
+        overwrite_worksheet_with_df(sheet, df_filtered)
         st.success("Reimbursement settled successfully!")
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
