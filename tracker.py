@@ -100,20 +100,19 @@ if st.button("Settle Reimbursement"):
             spreadsheet_key = st.secrets["connections"]["gsheets"]["spreadsheet"]
             worksheet_index = int(st.secrets["connections"]["gsheets"]["worksheet"])
             sheet = client.open_by_key(spreadsheet_key).get_worksheet(worksheet_index)
-            rows = sheet.get_all_values()
-            
-            filtered_rows = [row for row in rows if row[4] != "TRUE"]
-            
-            sheet.clear()
-            
-            for i, row in enumerate(filtered_rows, start=1):
-                for j, value in enumerate(row, start=1):
-                    sheet.update_cell(i, j, value)
-            
-            st.success("Reimbursement settled successfully!")
         except Exception as e:
             st.error(f"An error occurred: {e}")
             st.stop()
+        rows = sheet.get_all_values()
+            
+        filtered_rows = [row for row in rows if row[4] != "TRUE"]
+        sheet.clear()
+        
+        for i, row in enumerate(filtered_rows, start=1):
+            for j, value in enumerate(row, start=1):
+                sheet.update_cell(i, j, value)
+        
+        st.success("Reimbursement settled successfully!")
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
 
